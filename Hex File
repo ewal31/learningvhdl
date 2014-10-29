@@ -1,0 +1,165 @@
+Hex File
+
+Check Codes
+
+0 - write
+1 - read
+2 - SS = 1
+3 - SS = 0
+4 - CE = 1
+5 - CE = 0
+6 - Delay
+7 - Half-Byte
+8 - source_msg
+9 - sink_msg
+A - snd_cnt + 1
+B -
+C -
+D -
+E -
+F - Section End
+
+Command List
+
+-------------------------------------Setup Section--------------------
+x"300", --SS = 0
+x"010" or x"20", --write to tx_addr
+x"000", --tx_addr1
+x"000", --tx_addr2
+x"000", --tx_addr3
+x"000", --tx_addr4
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"00A" or x"20", --write to rx_addr
+x"000", --rx_addr1
+x"000", --rx_addr2
+x"000", --rx_addr3
+x"000", --rx_addr4
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"001" or x"20", --write to disable ACK
+x"000", --set to 00
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"002" or x"20", --write to enable RX pipe 0
+x"001", --enable pipe 0
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"011" or x"20", --write to payload width
+x"020", --width of 32
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"005" or x"20", --write RF Channel
+x"000", --RF Channel
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"006" or x"20", --write to RF_Setup
+x"006", --set gain and bitrate
+x"200", --SS = 1
+
+x"300", --SS = 0
+x"000" or x"20", --write to PWR_UP
+x"033", --power up and put in rx mode
+x"200", --SS = 1
+
+x"400", --CE = 1
+x"F00", --Section End
+
+-------------------------------------Transmit Section-----------------
+--Setup
+x"300", --SS = 0
+x"000" or x"20", --change config
+x"032", --write to config
+x"200", --SS = 1
+
+--Packet
+x"300", --SS = 0
+x"0A0", --W_RX_PAYLOAD
+x"720", --packet type
+x"792", --Destination Address 1
+x"724", --Destination Address 2
+x"792", --Destination Address 3
+x"742", --Destination Address 4
+x"700", --source address 1
+x"700", --source address 2
+x"700", --source address 3
+x"700", --source address 4
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"800", --message from source
+x"200", --SS = 1
+
+--Change back to rx mode
+x"600", --Delay 10 micro
+x"500", --CE = 0
+x"600", --Delay 10 micro
+x"400", --CE = 1
+x"600", --Delay 10 micro
+x"500", --CE = 0
+x"600", --Delay 10 micro
+
+--Refresh Config Register
+x"300", --SS = 0
+x"000" or x"20", --change config
+x"033", --write to config
+x"200", --SS = 1
+
+x"400", --CE = 1
+x"A00", --snd_cnt <= snd_cnt + 1;
+x"F00", --Section End
+
+-------------------------------------Recieve Section------------------
+x"300", --SS = 0
+x"061"	--R_RX_PAYLOAD      --will have to do something with these
+x"720", --packet type       --values eventually
+x"792", --Destination Address 1
+x"724", --Destination Address 2
+x"792", --Destination Address 3
+x"742", --Destination Address 4
+x"700", --source address 1
+x"700", --source address 2
+x"700", --source address 3
+x"700", --source address 4
+x"011", --write first message
+x"911", --message from source 1
+x"911", --message from source 2
+x"911", --message from source 3
+x"911", --message from source 4
+x"911", --message from source 5
+x"911", --message from source 6
+x"911", --message from source 7
+x"911", --message from source 8
+x"911", --message from source 9
+x"911", --message from source 10
+x"911", --message from source 11
+x"911", --message from source 12
+x"911", --message from source 13
+x"911", --message from source 14
+x"200", --SS = 1
+
+x"600", --Delay 10 micro
+
+--Refresh Config Register
+x"300", --SS = 0
+x"000" or x"20", --change config
+x"033", --write to config
+x"200", --SS = 1
+
+x"F00"  --Section End
